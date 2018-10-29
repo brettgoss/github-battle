@@ -1,7 +1,43 @@
 var React = require('react');
+var PropTypes = require('prop-types');
 var Link = require('react-router-dom').Link;
+var PlayerPreview = require("./PlayerPreview");
+
 var queryString = require('query-string');
 var api = require('../utils/api');
+
+function Profile (props) {
+  return (
+    <div>
+      <PlayerPreview
+        avatar={props.info.avatar_url}
+        username={props.info.login}>
+
+      </PlayerPreview>
+    </div>
+  )
+}
+
+Profile.propTypes = {
+  info: PropTypes.object.isRequired,
+}
+
+function Player (props) {
+  console.log(props)
+  return (
+    <div>
+      <h1 className='header'>{props.label}</h1>
+      <h3 className='score'>{props.score}</h3>
+      <Profile info={props.profile} />
+    </div>
+  )
+}
+
+Player.propTypes = {
+  label: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
+  profile: PropTypes.object.isRequired,
+}
 
 class Results extends React.Component {
 
@@ -60,7 +96,18 @@ class Results extends React.Component {
     }
 
     return (
-      <div>Results</div>
+      <div className='row'>
+        <Player
+          label='Winner'
+          score={winner.score}
+          profile={winner.profile}
+        />
+        <Player
+          label='Loser'
+          score={loser.score}
+          profile={loser.profile}
+        />
+      </div>
     )
   }
 }
