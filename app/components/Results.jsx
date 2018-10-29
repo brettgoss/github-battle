@@ -2,6 +2,7 @@ var React = require('react');
 var PropTypes = require('prop-types');
 var Link = require('react-router-dom').Link;
 var PlayerPreview = require("./PlayerPreview");
+var Loading = require("./Loading");
 
 var queryString = require('query-string');
 var api = require('../utils/api');
@@ -16,7 +17,7 @@ function Profile (props) {
           {info.name && <li>{info.name}</li>}
           {info.location && <li>{info.location}</li>}
           {info.company && <li>{info.company}</li>}
-          <li>Follpwers: {info.followers}</li>
+          <li>Followers: {info.followers}</li>
           <li>Following: {info.following}</li>
           <li>Public Repos: {info.public_repos}</li>
           {info.blog && <li><a href={info.blog}>{info.blog}</a></li>}
@@ -93,7 +94,7 @@ class Results extends React.Component {
     var loading = this.state.loading;
 
     if (loading === true) {
-      return <p>Loading...</p>;
+      return <Loading />;
     }
 
     if (error) {
