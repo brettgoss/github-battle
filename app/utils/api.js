@@ -1,21 +1,26 @@
 var axios = require('axios');
+require('dotenv').config();
+
+var clientId = process.env.CLIENT_ID;
+var secret = process.env.SECRET;
+var params = "?client_id=" + clientId + "&client_secret=" + secret;
 
 function getProfile (username) {
-  return axios.get('https://api.github.com/user/' + username)
+  return axios.get('https://api.github.com/users/' + username + params)
     .then(function (user) {
       return user.data;
     });
 }
 
 function getRepos (username) {
-  return axios.get('https://api.github.com/user/' + username + '/repos' + '&per_page=100')
+  return axios.get('https://api.github.com/users/' + username + '/repos' + params + '&per_page=100')
     .then(function (repos) {
       return repos.data;
     })
 }
 
 function getStarCount (repos) {
-  return repos.data.reduce(function (count, repo) {
+  return repos.reduce(function (count, repo) {
     return count + repo.stargazers_count;
   }, 0)
 }
@@ -55,9 +60,9 @@ function sortPlayers (players) {
 
 module.exports = {
   battle: function (players) {
-    axios.all(players.map(getUserData))
+    return axios.all(players.map(getUserData))
       .then(sortPlayers)
-      .catch(handleError)
+      .catch(handleError);
   },
   fetchPopularRepos: function (language) {
     var encodedURI = window.encodeURI('https://api.github.com/search/repositories?q=stars:>1+language:' + language + '&sort=stars&order=desc&type=Repositories');
