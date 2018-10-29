@@ -7,12 +7,20 @@ var queryString = require('query-string');
 var api = require('../utils/api');
 
 function Profile (props) {
+  var info = props.info;
+
   return (
     <div>
-      <PlayerPreview
-        avatar={props.info.avatar_url}
-        username={props.info.login}>
-
+      <PlayerPreview avatar={info.avatar_url} username={info.login}>
+        <ul className='space-list-items'>
+          {info.name && <li>{info.name}</li>}
+          {info.location && <li>{info.location}</li>}
+          {info.company && <li>{info.company}</li>}
+          <li>Follpwers: {info.followers}</li>
+          <li>Following: {info.following}</li>
+          <li>Public Repos: {info.public_repos}</li>
+          {info.blog && <li><a href={info.blog}>{info.blog}</a></li>}
+        </ul>
       </PlayerPreview>
     </div>
   )
@@ -27,7 +35,7 @@ function Player (props) {
   return (
     <div>
       <h1 className='header'>{props.label}</h1>
-      <h3 className='score'>{props.score}</h3>
+      <h3 style={{textAlign: 'center'}}>Score: {props.score}</h3>
       <Profile info={props.profile} />
     </div>
   )
