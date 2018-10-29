@@ -32,7 +32,6 @@ Profile.propTypes = {
 }
 
 function Player (props) {
-  console.log(props)
   return (
     <div>
       <h1 className='header'>{props.label}</h1>
