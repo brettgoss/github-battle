@@ -1,5 +1,4 @@
 var axios = require('axios');
-require('dotenv').config();
 
 var clientId = process.env.CLIENT_ID;
 var secret = process.env.SECRET;
